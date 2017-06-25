@@ -10,32 +10,43 @@ Created on Aug 19, 2011
 @author: paulross
 """
 
+
 class ExceptionNormal(Exception):
     pass
+
 
 class ExceptionCleanUp(Exception):
     pass
 
+
 def a():
     b()
-    
+
+
 def b():
     try:
         c()
     finally:
-        print('  b(): finally: This code is always executed.')
-        cleanUp()
+        try:
+            print('  b(): finally: This code is always executed.')
+            clean_up()
+        except Exception as err:
+            print('  -- HELP! Consuming: %s' % type(err))
+
 
 def c():
     print('Raising "ExceptionNormal" from c()')
     raise ExceptionNormal('ExceptionNormal raised from function c()')
 
-def cleanUp():
+
+def clean_up():
     raise ExceptionCleanUp('Can not clean up')
+
 
 def main():
     a()
     return 0
+
 
 if __name__ == '__main__':
     main()

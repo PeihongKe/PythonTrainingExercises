@@ -26,38 +26,31 @@ Created on Sep 6, 2011
 @author: paulross
 """
 
-__author__  = 'Paul Ross'
-__date__    = '2011-08-03'
+__author__ = 'Paul Ross'
+__date__ = '2011-08-03'
 __version__ = '0.1.0'
 __rights__ = 'Copyright (c) 2011 Paul Ross. Copyright (c) 2015 AHL.'
 
-import sys
-
-import pytest
+import unittest
 
 
 def _filter(fn, iterable):
-    # Your code here
-    pass
+    if fn is None:
+        return [v for v in iterable if v]
+    return [v for v in iterable if fn(v)]
 
 
 def _map(fn, iterable):
-    # Your code here
-    pass
+    if fn is None:
+        return iterable
+    return [fn(v) for v in iterable]
 
 
-def test_filter():
-    seq = [1, -2, 3, -4]
-    assert(filter(lambda x: x > 0, seq) == _filter(lambda x: x > 0, seq))
+class TestFunctions(unittest.TestCase):
+    def test_filter(self):
+        seq = [1, -2, 3, -4]
+        self.assertEqual(list(filter(lambda x: x > 0, seq)), _filter(lambda x: x > 0, seq))
 
-
-def test_map():
-    seq = 'abcdef'
-    assert(map(lambda x: x.upper(), seq) == _map(lambda x: x.upper(), seq))
-
-
-def main():
-    return pytest.main(__file__)
-
-if __name__ == '__main__':
-    sys.exit(main())
+    def test_map(self):
+        seq = 'abcdef'
+        self.assertEqual(list(map(lambda x: x.upper(), seq)), _map(lambda x: x.upper(), seq))

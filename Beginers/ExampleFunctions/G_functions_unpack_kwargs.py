@@ -6,23 +6,26 @@ Created on Aug 25, 2011
 @author: paulross
 """
 
+
 def unpackKwargs(**kwargs):
     keys = kwargs.keys()
-    keys.sort()
+    sorted(keys)
     for kw in keys:
-        print kw, ":", kwargs[kw]
+        print(kw, ":", kwargs[kw])
+
 
 def main():
-    print 'callUnpackKwargs():'
-    print 'Specific arguments:'
+    print('callUnpackKwargs():')
+    print('Specific arguments:')
     unpackKwargs(name='python', version=2.6)
     d = {
-        'name' : 'python',
-        'version' : 2.6,
+        'name': 'python',
+        'version': 2.6,
     }
-    print
-    print 'Unpacked arguments:'
+    print()
+    print('Unpacked arguments:')
     unpackKwargs(**d)
+
 
 if __name__ == '__main__':
     main()

@@ -22,29 +22,29 @@ Created on 19 Feb 2016
 import random
 import textwrap
 
-OPENING_WORDS = ['Our', 'clear', 'strategic', 'direction', 'is', 'to', 'invoke',]
+OPENING_WORDS = ['Our', 'clear', 'strategic', 'direction', 'is', 'to', 'invoke', ]
 
 PHRASE_TABLE = (
-    ("accountable",         "transition",           "leadership"),
-    ("driving",             "strategy",             "implementation"),
-    ("drilling down into",  "active",               "core business objectives"),
-    ("next billion",        "execution",            "with our friends in <other corp.>"),
-    ("creating",            "next-generation",      "franchise platform"),
-    ("<big corp.>'s",       "volume and",           "value leadership"),
-    ("significant",         "end-user",             "experience"),
-    ("transition",          "from <small corp.>",   "to <other corp.>'s platform"),
-    ("integrating",         "shared",               "services"),
-    ("empowered to",        "improve and expand",   "our portfolio of experience"),
-    ("deliver",             "new",                  "innovation"),
-    ("ramping up",          "diverse",              "collaboration"),
-    ("next generation",     "mobile",               "ecosystem"),
-    ("focus on",            "growth and",           "consumer delight"),
-    ("management",          "planning",             "interlocks"),
-    ("necessary",           "operative",            "capabilities"),
-    ("knowledge",           "optimization",         "initiatives"), 
-    ("modular",             "integration",          "environment"),
-    ("software",            "creation",             "processes"),
-    ("agile",               "working",              "practices"),
+    ("accountable", "transition", "leadership"),
+    ("driving", "strategy", "implementation"),
+    ("drilling down into", "active", "core business objectives"),
+    ("next billion", "execution", "with our friends in <other corp.>"),
+    ("creating", "next-generation", "franchise platform"),
+    ("<big corp.>'s", "volume and", "value leadership"),
+    ("significant", "end-user", "experience"),
+    ("transition", "from <small corp.>", "to <other corp.>'s platform"),
+    ("integrating", "shared", "services"),
+    ("empowered to", "improve and expand", "our portfolio of experience"),
+    ("deliver", "new", "innovation"),
+    ("ramping up", "diverse", "collaboration"),
+    ("next generation", "mobile", "ecosystem"),
+    ("focus on", "growth and", "consumer delight"),
+    ("management", "planning", "interlocks"),
+    ("necessary", "operative", "capabilities"),
+    ("knowledge", "optimization", "initiatives"),
+    ("modular", "integration", "environment"),
+    ("software", "creation", "processes"),
+    ("agile", "working", "practices"),
 )
 
 INSERTS = ('for', 'with', 'and', 'as well as', 'by',
@@ -54,23 +54,32 @@ INSERTS = ('for', 'with', 'and', 'as well as', 'by',
            '. We need',
            'and unrelenting',
            'with unstoppable',
-)
+           )
+
 
 def get_phrase():
     """Return a phrase by choosing words at random from each column of the PHRASE_TABLE."""
-    # Your code goes here
-    pass
+    return [random.choice(PHRASE_TABLE)[i] for i in range(3)]
+
 
 def get_insert():
     """Return a randomly chosen set of words to insert between phrases."""
     # Your code goes here
-    pass
+    return random.choice(INSERTS)
+
 
 def write_speech(n):
     """Write a speech with the opening words followed by n random phrases
     interspersed with random inserts."""
-    # Your code goes here
-    pass
+    phrases = OPENING_WORDS
+    while n:
+        phrases.extend(get_phrase())
+        if n > 1:
+            phrases.append(get_insert())
+        n -= 1
+    text = " ".join(phrases) + '.'
+    print(textwrap.fill(text))
+
 
 if __name__ == '__main__':
     write_speech(40)

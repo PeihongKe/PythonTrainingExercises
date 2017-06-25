@@ -1,3 +1,5 @@
+import unittest
+
 """Some exercises involving lists.
 
 creating lists
@@ -96,143 +98,151 @@ Created on 21 Feb 2016
 
 @author: paulross
 """
-import pytest
+
 
 def create_list():
     """Create a list."""
-    a ='A'
-    b ='B'
-    c ='C'
-    # Your code goes here
+    a = 'A'
+    b = 'B'
+    c = 'C'
+    return [a, b, c]
+
 
 def select_first_item():
     """Return first item."""
     x = ['A', 'B', 'C']
-    # Your code goes here
+    return x[0]
+
 
 def select_last_item():
     """Return last item."""
     x = ['A', 'B', 'C']
-    # Your code goes here
+    return x[-1]
+
 
 def select_reversed():
     """Return list reversed."""
     x = ['A', 'B', 'C']
-    # Your code goes here
+    return x[::-1]
+
 
 def select_first_items():
     """Select first item on each list."""
-    x = [('A','x'), ('B','y'), ('C','z')]
-    # Your code goes here
+    x = [('A', 'x'), ('B', 'y'), ('C', 'z')]
+    return [a for a, b in x]
+
 
 def add_5_to_values():
     """Return the list with 5 added to each value."""
     x = [1, 10, 20]
-    # Your code goes here
+    return [a + 5 for a in x]
+
 
 def get_divisble_by_5():
     """Return elements that are divisble by 5."""
-    x = [1, 10,  15, 3, 12, 15, 25, 50]
-    # Your code goes here
+    x = [1, 10, 15, 3, 12, 15, 25, 50]
+    return list(filter(lambda x: not x % 5, x))
+
 
 def merge_lists():
     """Returns pairs from each list."""
     x = ['A', 'B', 'C']
     y = ['x', 'y', 'z']
-    # Your code goes here
+    return list(zip(x, y))
+
 
 def transpose(list_of_lists):
     """Transpose a list of lists."""
     # Your code goes here
-    pass
+    return [list(v) for v in zip(*list_of_lists)]
+
 
 def peak_to_peak(alist):
     """Return the peak to peak value of a list."""
-    pass
+    return max(alist) - min(alist)
+
 
 def rotate_left(alist):
     """Rotates a list to the left so that the first item appears at the end."""
-    pass
+    if len(alist):
+        alist.append(alist.pop(0))
+
 
 def rotate_right(alist):
     """Rotates a list to the right so that the last item appears at the beginning."""
-    pass
+    if len(alist):
+        alist.insert(0, alist.pop())
 
-#=================== Tests ========================
-def test_create_list():
-    assert create_list() == ['A', 'B', 'C']
 
-def test_select_first_item():
-    assert select_first_item() == 'A'
+class TestListsTuples(unittest.TestCase):
+    def test_create_list(self):
+        assert create_list() == ['A', 'B', 'C']
 
-def test_select_last_item():
-    assert select_last_item() == 'C'
-    
-def test_select_reversed():
-    assert select_reversed() == ['C', 'B', 'A']
-    
-def test_select_first_items():
-    assert select_first_items() == ['A','B','C']
-    
-def test_add_5_to_values():
-    assert add_5_to_values() == [6, 15, 25]
-    
-def test_get_divisble_by_5():
-    assert get_divisble_by_5() == [10, 15, 15, 25, 50]
-    
-def test_merge_lists():
-    assert merge_lists() == [('A', 'x'), ('B', 'y'), ('C', 'z')]
+    def test_select_first_item(self):
+        assert select_first_item() == 'A'
 
-def test_transpose():
-    data = [
-        [1, 2, 3],
-        ['A', 'B', 'C'],
-    ]
-    expected = [
-        [1, 'A'],
-        [2, 'B'],
-        [3, 'C'],
-    ]
-    assert transpose(data) == expected
+    def test_select_last_item(self):
+        assert select_last_item() == 'C'
 
-def test_transpose_non_equal_length():
-    data = [
-        [1, 2, 3],
-        ['A', 'B'],
-    ]
-    expected = [
-        [1, 'A'],
-        [2, 'B'],
-    ]
-    assert transpose(data) == expected
+    def test_select_reversed(self):
+        assert select_reversed() == ['C', 'B', 'A']
 
-def test_peak_to_peak():
-    assert peak_to_peak([1, 8]) == 7
-    assert peak_to_peak([-1, -8]) == 7
-    assert peak_to_peak([9, -8]) == 17
+    def test_select_first_items(self):
+        assert select_first_items() == ['A', 'B', 'C']
 
-def test_rotate_left():
-    l = ['A', 'B', 'C']
-    rotate_left(l)
-    assert l ==  ['B', 'C', 'A']
+    def test_add_5_to_values(self):
+        assert add_5_to_values() == [6, 15, 25]
 
-def test_rotate_right():
-    l = ['A', 'B', 'C']
-    rotate_right(l)
-    assert l == ['C', 'A', 'B']
+    def test_get_divisble_by_5(self):
+        assert get_divisble_by_5() == [10, 15, 15, 25, 50]
 
-def test_rotate_left_empty():
-    l = []
-    rotate_left(l)
-    assert l == []
+    def test_merge_lists(self):
+        assert merge_lists() == [('A', 'x'), ('B', 'y'), ('C', 'z')]
 
-def test_rotate_right_empty():
-    l = []
-    rotate_right(l)
-    assert l == []
+    def test_transpose(self):
+        data = [
+            [1, 2, 3],
+            ['A', 'B', 'C'],
+        ]
+        expected = [
+            [1, 'A'],
+            [2, 'B'],
+            [3, 'C'],
+        ]
+        assert transpose(data) == expected
 
-def main():
-    return pytest.main(__file__)
+    def test_transpose_non_equal_length(self):
+        data = [
+            [1, 2, 3],
+            ['A', 'B'],
+        ]
+        expected = [
+            [1, 'A'],
+            [2, 'B'],
+        ]
+        assert transpose(data) == expected
 
-if __name__ == '__main__':
-    main()
+    def test_peak_to_peak(self):
+        assert peak_to_peak([1, 8]) == 7
+        assert peak_to_peak([-1, -8]) == 7
+        assert peak_to_peak([9, -8]) == 17
+
+    def test_rotate_left(self):
+        l = ['A', 'B', 'C']
+        rotate_left(l)
+        assert l == ['B', 'C', 'A']
+
+    def test_rotate_right(self):
+        l = ['A', 'B', 'C']
+        rotate_right(l)
+        assert l == ['C', 'A', 'B']
+
+    def test_rotate_left_empty(self):
+        l = []
+        rotate_left(l)
+        assert l == []
+
+    def test_rotate_right_empty(self):
+        l = []
+        rotate_right(l)
+        assert l == []
